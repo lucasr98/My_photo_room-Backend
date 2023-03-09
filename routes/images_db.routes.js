@@ -25,7 +25,7 @@ router.get(`${URL}/database_all_submits/:page`, async (req, res)=>{
 router.get(`${URL}/database_submit/:image`, async (req, res)=>{
     try{
         const [ result ] = await pool.query(`SELECT * FROM ${publicaciones} WHERE image = ?`, [
-            req.params.image
+            `my_photo_room/${req.params.image}`
         ])
         console.log(result);
         res.json(result[0]);
@@ -38,16 +38,17 @@ router.get(`${URL}/database_submit/:image`, async (req, res)=>{
 })
 
 // RUTA: Para guardar una publicación (base de datos)
-router.post(`${URL}/database_submit`, async (req, res)=>{
+router.patch(`${URL}/database_submit`, async (req, res)=>{
     try{
-        const { userRef, title, content, image, date } = req.body;
-        const [ result ] = await pool.query(`INSERT INTO ${publicaciones}(userRef, title, content, image, date) VALUES(?, ?, ?, ?, ?)`, [
+        const { userRef, title, content, image, url, date } = req.body;
+        const result = await pool.query(`INSERT INTO ${publicaciones}(userRef, title, content, image, url, date) VALUES(?, ?, ?, ?, ?, ?)`, [
             userRef,
             title,
             content,
             image,
+            url,
             date
-        ])
+        ]);
         console.log(result);
         res.json(result);
     }

@@ -11,6 +11,7 @@ router.post(`${URL}/database_account`, async (req, res) => {
   }
   try {
     const { user, password, email, name, lastName, genre, age } = req.body;
+    console.log(req.body);
     const [verify] = await pool.query(
       `SELECT user FROM ${usuarios} where user = ?`,
       [user]
@@ -21,7 +22,7 @@ router.post(`${URL}/database_account`, async (req, res) => {
       });
     }
     const [result] = await pool.query(
-      `INSERT INTO ${usuarios}(user, password, email, name, lastName, genre, age, image) VALUES(?, ?, ?, ?, ?, ?, ?, "")`,
+      `INSERT INTO ${usuarios}(user, password, email, name, lastName, genre, age, image, imageName) VALUES(?, ?, ?, ?, ?, ?, ?, "", "")`,
       [
         user,
         password,
@@ -113,10 +114,10 @@ router.get(`${URL}/database_profile/:user`, async (req, res) => {
 // RUTA: Para subir/eliminar imágen de perfil (base de datos)
 router.put(`${URL}/database_profile`, async (req, res) => {
   try {
-    const { image, user } = req.body;
+    const { image, imgName, user } = req.body;
     const [result] = await pool.query(
-      `UPDATE ${usuarios} SET image = ? WHERE user = ?`,
-      [image, user]
+      `UPDATE ${usuarios} SET image = ?, imageName = ? WHERE user = ?`,
+      [image, imgName, user]
     );
     res.json(result);
   } catch (error) {
