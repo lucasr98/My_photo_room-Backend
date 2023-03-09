@@ -1,7 +1,7 @@
 import express from "express";
 import { PORT } from "./config.js";
 import cors from "cors";
-import { dirname, join } from "path";
+import path, { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import fileUpload from "express-fileupload";
 
@@ -20,7 +20,7 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(fileUpload({
   useTempFiles: true,
-  tempFileDir: './uploads'
+  tempFileDir: path.join(__dirname, '/uploads/')
 }));
 
 // Ruta para guardar las imágenes
