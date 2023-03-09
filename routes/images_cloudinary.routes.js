@@ -13,7 +13,7 @@ cloudinary.v2.config({
 });
 
 // RUTA: Para guardar una publicación del usuario (backend)
-router.post("cloudinary_submit", async (req, res) => {
+router.post(`${URL}/cloudinary_submit`, async (req, res) => {
   try {
     if (req.files?.file) {
       const file = req.files.file;
@@ -44,7 +44,7 @@ router.put(`${URL}/cloudinary_submit`, async (req, res) => {
   }
 });
 
-router.patch("/cloudinary_submits", async (req, res)=>{
+router.patch(`${URL}/cloudinary_submits`, async (req, res)=>{
   try{
     console.log("-----------------")
     console.log(req.body);
