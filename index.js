@@ -16,7 +16,7 @@ import imagesCloudinaryRouter from "./routes/images_cloudinary.routes.js";
 var app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-app.use(cors({ origin: "*" }));
+app.use(cors());
 app.use(express.json());
 app.use(fileUpload({
   useTempFiles: true,
